@@ -21,4 +21,5 @@ int main(){
 		}
 	};
 	printf("Spaces: %d , tabs: %d, lines %d \n", spaces, tabs, lines); 
+	return 0;
 }

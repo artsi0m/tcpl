@@ -22,5 +22,6 @@ int main(){
 			default: 
 				putchar(c);
 		}
-					};
+	};
+	return 0;
 }

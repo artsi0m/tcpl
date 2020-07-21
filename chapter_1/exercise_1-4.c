@@ -11,4 +11,5 @@ main(){
 	for (celsius = LOWER; celsius <= UPPER; celsius += STEP){
 		printf("%3d \t %3f \n", celsius, (celsius / 5.0 * 9.0) + 32);
 	}
+	return 0;
 }
