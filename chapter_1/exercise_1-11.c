@@ -1,11 +1,12 @@
 #include <assert.h>
 #include <stdio.h>
+#include <wchar.h>
 
 int
 main(){
 	FILE *f;
 	unsigned long i;
-	unsinged long up_lim = 66000ul;
+	unsigned long up_lim = 66000ul;
 
 	/* input file with zero words */
 	f = fopen("test0", "w");
@@ -24,7 +25,7 @@ main(){
 	f = fopen("test1-b", "w");
 	assert(f != NULL);
 	for (i = 0; i < up_lim; ++i){
-		fputc('á', f);
+		fputwc(L'á', f);
 	}
 	fclose(f);
 
@@ -55,7 +56,7 @@ main(){
 		fputc('\t', f);
 	}
 	for (i = 0; i < (up_lim / 3); ++i){
-		fputc(' ', f)
+		fputc(' ', f);
 	}
 	fprintf(f, "word");
 	fclose(f);
@@ -64,7 +65,7 @@ main(){
 	f = fopen("test", "w");
 	assert(f != NULL);
 	for (i = 0; i < (up_lim / 22); ++i){
-		fputs("A A A A A A A A A A A A A A A A A A A A A A ");
+		fputs("A A A A A A A A A A A A A A A A A A A A A A ", f);
 	}
 	fclose(f);
 
