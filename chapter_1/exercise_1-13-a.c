@@ -25,7 +25,7 @@ int main(){
                 ++nw;
             }
         }
-        if (nw == max_number_of_words) {
+        if (nw == (int)max_number_of_words) {
             fputs("This program can work only with 1000 words", stderr);
             break;
         }
@@ -36,5 +36,6 @@ int main(){
         }
         putchar('\n');
     }
+    free(nc);
     return 0;
 }
