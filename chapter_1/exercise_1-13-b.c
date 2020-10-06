@@ -42,4 +42,5 @@ int main()
         }
         putchar('\n');
     }
+    free(nc);
 }
