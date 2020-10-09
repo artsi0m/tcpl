@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+#define FIRST_PRINTABLE_CHAR 33
+#define LAST_PRINTABLE_CHAR 127
+
 void put_shebang_line_for_each_char(int c)
 {
     putchar(' ');
@@ -19,26 +22,14 @@ int main()
     }
 
     while ((c = getchar()) != EOF) {
-        ++ch[c];
+        if (c > 0 && c < 128) {
+            ++ch[c];
+        }
     }
 
-    for (int i = 0; i < 128; ++i) {
-        if (i == '\n') {
-            putchar('\\');
-            putchar('n');
-            put_shebang_line_for_each_char(ch[i]);
-        } else if (i == '\t') {
-            putchar('\\');
-            putchar('t');
-            put_shebang_line_for_each_char(ch[i]);
-        } else if (i == '\b') {
-            putchar('\\');
-            putchar('b');
-            put_shebang_line_for_each_char(ch[i]);
-        } else {
-            putchar(i);
-            put_shebang_line_for_each_char(ch[i]);
-        }
+    for (int i = FIRST_PRINTABLE_CHAR; i < LAST_PRINTABLE_CHAR; ++i) {
+        putchar(i);
+        put_shebang_line_for_each_char(ch[i]);
     }
     return 0;
 }
