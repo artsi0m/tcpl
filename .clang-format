@@ -1,0 +1,11 @@
+PointerAlignment: Right
+ColumnLimit: 72
+AlignEscapedNewlines: Left
+AlignOperands: false
+SpaceAfterCStyleCast: false
+SpaceBeforeAssignmentOperators: true
+SpaceInEmptyParentheses: false
+SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
+SpacesInSquareBrackets: false
+SortIncludes: false
