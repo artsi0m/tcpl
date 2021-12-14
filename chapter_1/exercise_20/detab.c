@@ -5,10 +5,12 @@ int
 main(void)
 {
 	int c;
-	while ((c = getchar()) != EOF){
-		if (c == '\t'){
-			for(int i=0; i < TABSTOP; i++)
+	while ((c = getchar()) != EOF) {
+		if (c == '\t') {
+			for (int i = 0; i < TABSTOP; i++)
 				putchar(' ');
-		} else { putchar(c); }
+		} else {
+			putchar(c);
+		}
 	}
 }
