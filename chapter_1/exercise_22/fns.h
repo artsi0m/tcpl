@@ -1,0 +1,1 @@
+int	getchararr(char *, int);
