@@ -5,10 +5,10 @@
 
 #include "fns.h"
 #define MAXLINE 1000
-#define FOLDLINE 80
+#define FOLDLINE 20
 
 void	fold(char *, char *, int );
-/* fold input lines into two or more shorter lines */
+
 int
 main(void)
 {
@@ -30,7 +30,11 @@ main(void)
 void
 fold(char ret[], char s[], int fold_lim)
 {
-	int i, j;
+	/*
+	 * i -- counter for position in s[]
+	 * j -- counter for unfolded part of ret[]
+	 */
+	int i, j, k;
 	int space_position = 0;
 
 	for (i = 0, j = 0; i < MAXLINE - 1; ++i, ++j){
@@ -43,6 +47,18 @@ fold(char ret[], char s[], int fold_lim)
 			ret[space_position] = '\n';
 			j = 0;
 		} 
+
+	}
+
+	if(j > fold_lim && space_position == 0){
+		for(i = 0, k = 0; i < MAXLINE - 1; ++i, ++k){
+			ret[i] = s[k];
+			
+			if(i == fold_lim){
+				ret[fold_lim] = '\n';
+				k--;
+			}
+		}
 	}
 
 }
