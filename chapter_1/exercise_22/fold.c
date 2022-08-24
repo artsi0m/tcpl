@@ -2,6 +2,7 @@
  *
  */
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "fns.h"
 #define MAXLINE 1000
@@ -37,29 +38,27 @@ fold(char ret[], char s[], int fold_lim)
 	 * l -- number of folds in ret[] in a second pass
 	 */
 	int i, j, k, l;
+	int fch = '\n';
 	int space_position = 0;
 
-	for (i = 0, j = 0; i < MAXLINE - 1; ++i, ++j) {
-		ret[i] = s[i];
+	for (i = 0, k = 0, j = 0; i < MAXLINE - 1; ++i, ++k, ++j) {
+		ret[i] = s[k];
 
-		if ((s[i] == ' ' || s[i] == '\t') && j < fold_lim)
-			space_position = i;
+		if ((s[k] == ' ' || s[k] == '\t') && j < fold_lim)
+			space_position = k;
 
 		if (j > fold_lim && space_position != 0) {
 			ret[space_position] = '\n';
 			j = 0;
 		}
-	}
 
-	if (j > fold_lim) {
-		for (i = 0, k = 0; i < MAXLINE - 1; ++i, ++k) {
-			ret[i] = s[k];
-
-			if (i % fold_lim == 0) {
-				l = i / fold_lim;
-				ret[fold_lim * l] = '\n';
-				k--;
-			}
+		if (j % fold_lim == 0 && j != 0) {
+			l = i / fold_lim;
+			fch = ret[fold_lim * l];
+			ret[fold_lim * l] = '\n';
+			while(s[k + 1] != fch) k--;
 		}
+
 	}
+
 }
