@@ -3,62 +3,61 @@
  */
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "fns.h"
 #define MAXLINE 1000
 #define FOLDLINE 20
 
-void	fold(char *, char *, int);
+void	fold(char *, size_t, size_t);
+size_t newlinelen(const char *, size_t);
 
 int
 main(void)
 {
 	int len;		/* current line length */
 	char line[MAXLINE];
-	char folded_line[MAXLINE];
 
 	while ((len = getchararr(line, MAXLINE)) > 0) {
 		if (len > FOLDLINE) {
-			fold(folded_line, line, FOLDLINE);
-			fputs(folded_line, stdout);
+    			fold(line, MAXLINE, FOLDLINE);
+			fputs(line, stdout);
 		} else {
 			fputs(line, stdout);
 		}
 	}
 }
 
+
+/* return length of the string till the newline */
+size_t
+newlinelen(const char *str, size_t maxlen)
+{
+    const char *cp;
+    for(cp = str; maxlen != 0 && *cp != '\n'; cp++, maxlen--)
+    	;
+
+    return (size_t)(cp - str);
+}
+
 /* Fold line i.e. insert newlines into returned line  */
 void
-fold(char ret[], char s[], int fold_lim)
+fold(char s[], size_t maxlen, size_t fold_lim)
 {
-	/*
-	 * i -- counter for position in s[]
-	 * j -- counter for unfolded part of ret[]
-	 * k -- counter for position in s[] in second pass
-	 * l -- number of folds in ret[] in a second pass
-	 */
-	int i, j, k, l;
-	int fch = '\n';
-	int space_position = 0;
+    	size_t len_till_term = strnlen(s, maxlen);
+	size_t len_till_newline = newlinelen(s, maxlen);
 
-	for (i = 0, k = 0, j = 0; i < MAXLINE - 1; ++i, ++k, ++j) {
-		ret[i] = s[k];
-
-		if ((s[k] == ' ' || s[k] == '\t') && j < fold_lim)
-			space_position = k;
-
-		if (j > fold_lim && space_position != 0) {
-			ret[space_position] = '\n';
-			j = 0;
-		}
-
-		if (j % fold_lim == 0 && j != 0) {
-			l = i / fold_lim;
-			fch = ret[fold_lim * l];
-			ret[fold_lim * l] = '\n';
-			while(s[k + 1] != fch) k--;
-		}
-
+	if ((len_till_newline = newlinelen(s, maxlen)) > fold_lim){
+    		while(s+len_till_newline < s+len_till_term){
+        		s++;
+        		if (*s == ' ' || *s == '\t')
+         			*s = '\n';
+        		else if (*s == '\n'){
+            			s = s + len_till_newline;
+        			break;
+        		}
+    		}
 	}
+
 
 }
