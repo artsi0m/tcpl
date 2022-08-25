@@ -45,19 +45,19 @@ void
 fold(char s[], size_t maxlen, size_t fold_lim)
 {
     	size_t len_till_term = strnlen(s, maxlen);
-	size_t len_till_newline = newlinelen(s, maxlen);
+	size_t len_till_newline;
 
-	if ((len_till_newline = newlinelen(s, maxlen)) > fold_lim){
-    		while(s+len_till_newline < s+len_till_term){
-        		s++;
-        		if (*s == ' ' || *s == '\t')
-         			*s = '\n';
-        		else if (*s == '\n'){
-            			s = s + len_till_newline;
-        			break;
-        		}
-    		}
-	}
 
+	for (len_till_newline = newlinelen(s, maxlen); 
+		len_till_newline > fold_lim 
+		&& s+len_till_newline < s+len_till_term; s++){
+			if (*s == ' ' || *s == '\t')
+				*s = '\n';
+			else if (*s == '\n'){
+				s = s + len_till_newline;
+				len_till_newline = newlinelen(s, maxlen);
+			}
+
+		}
 
 }
